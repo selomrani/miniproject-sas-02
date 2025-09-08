@@ -1,27 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_GRADES 100
+#include <string.h>
+#define MAX_GRADES 5
 #define MAX_STUDENTS 30
-
-float student_average(float grades[], int num_grades) {
-    float sum = 0.0;
-    for (int i = 0; i < num_grades; i++) {
-        sum += grades[i];
-    }
-    return sum / num_grades;
-}
 
 typedef struct {
     char name[50];
     int age;
     char id[10];
-} student;
+    float grades[MAX_GRADES];
+    float average;
+}student;
 
 int main(void) {
     int choice;
-    float grade;
     student students[MAX_STUDENTS];
-    float grades[MAX_GRADES][MAX_STUDENTS];
     int num_grades = 0;
     int num_students = 0;
 
@@ -33,11 +26,14 @@ int main(void) {
         printf("3- Display all students  \n");
         printf("4- Display a report of a student  \n");
         printf("5- Calculate average of a student \n");
-        printf("6- Exit \n");
+        printf("6- Calculate average of the whole class \n");
+        printf("7- Exit \n");
         printf("**______________________________**\n");
+        printf("\n");
         
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        getchar();
         
         switch(choice) {
             case 1:     
@@ -46,14 +42,17 @@ int main(void) {
                     printf("Maximum number of students reached!\n");
                     break;
                 }
+                printf("how many students do you want to enter? : ");
+                scanf("%d", &num_students);
                 printf("Please fill in the following information:\n");
-                printf("Enter name: ");
-                scanf("%s", students[num_students].name);
-                printf("Enter age: ");
-                scanf("%d", &students[num_students].age);
-                printf("Enter ID: ");
-                scanf("%s", students[num_students].id);
-                num_students++;
+                for ( int i = 0 ; i < num_students ; i++){
+                    printf("Enter name of student [%d] : \n",i+1);
+                    scanf("%s", students[i].name);
+                    printf("Enter age of student [%d] : \n",i+1);
+                    scanf("%d", &students[i].age);
+                    printf("Enter ID of student [%d] : \n",i+1);
+                    scanf("%s", students[i].id);
+                }
                 break;
                 
             case 2:
@@ -62,11 +61,17 @@ int main(void) {
                     printf("No students available. Add a student first.\n");
                     break;
                 }
-                printf("How many grades do you want to enter? ");
+                int student_index = -1;
+                printf("Select a student to add grades for (1 to %d): ", num_students);
+                scanf("%d",&student_index);
+                printf("How many grades do you want to enter? : ");
                 scanf("%d", &num_grades);
+                if (num_grades > MAX_GRADES) {
+                    printf("You can only enter up to %d grades.\n", MAX_GRADES);
+                }
                 for ( int i = 0 ; i < num_grades ; i++){
                     printf("Enter grade [%d] : \n",i+1);
-                    scanf("%d",grades);
+                    scanf("%d", &students[student_index].grades[i]);
 
                 }   
                 break;                          
@@ -89,8 +94,12 @@ int main(void) {
             case 5: 
                 printf("Calculating average grade.\n");
                 break;
-                
+
             case 6:
+                printf("Calculating class average of the whole class.\n");
+                
+            case 7:
+            exit(0);
                 printf("Exiting the program.....\n");
                 break;
                 
