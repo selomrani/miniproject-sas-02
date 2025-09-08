@@ -3,6 +3,13 @@
 #include <string.h>
 #define MAX_GRADES 5
 #define MAX_STUDENTS 30
+float calculate_average(float grades[], int num_grades) {
+    float sum = 0.0;
+    for (int i = 0; i < num_grades; i++) {
+        sum += grades[i];
+    }
+    return sum / num_grades;
+}
 
 typedef struct {
     char name[50];
@@ -89,10 +96,31 @@ int main(void) {
                 
             case 4:
                 printf("Displaying report for student:\n");
+                if (num_students == 0) {
+                    printf("No students available.\n");
+                    break;
+                }
+                int report_index = -1;
+                printf("Select a student to view report (1 to %d): ", num_students);
+                scanf("%d",&report_index);
+                printf("Report for %s:\n", students[report_index].name);
+                printf("Age: %d, ID: %s\n", students[report_index].age, students[report_index].id);
+                for (int i = 0; i < num_grades; i++) {
+                printf("Grade [%d]: %.2f\n", i+1, students[report_index].grades[i]);
+                }
                 break;
                 
             case 5: 
                 printf("Calculating average grade.\n");
+                if (num_students == 0) {
+                    printf("No students available.\n");
+                    break;
+                }
+                int avg_index = -1;
+                printf("Select a student to calculate average (1 to %d): ", num_students);
+                scanf("%d",&avg_index);
+                students[avg_index].average = calculate_average(students[avg_index].grades, num_grades);
+                printf("Average grade for %s: %.2f\n", students[avg_index].name, students[avg_index].average);
                 break;
 
             case 6:
@@ -109,7 +137,7 @@ int main(void) {
         }
         printf("\n");
         
-    } while (choice != 6);
+    } while (choice != 7);
 
     return 0;
 }
