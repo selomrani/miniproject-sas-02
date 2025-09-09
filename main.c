@@ -75,12 +75,17 @@ int main(void) {
                 int student_index = -1;
                 printf("Select a student to add grades for (1 to %d): ", num_students);
                 scanf("%d",&student_index);
+                if (student_index > num_students)
+                printf("Student cannot be found please check and try again! \n");
+                printf("Select a student to add grades for (1 to %d): ", num_students);
+                scanf("%d",&student_index);
                 getchar();
                 printf("How many grades do you want to enter? : \n");
                 scanf("%d", &num_grades);
                 if (num_grades > MAX_GRADES) {
-                    printf("You can only enter up to %d grades.\n", MAX_GRADES);
-                    break;
+                printf("You can only enter up to %d grades.\n", MAX_GRADES);
+                printf("How many grades do you want to enter? : \n");
+                scanf("%d", &num_grades);
                 }
                 for ( int i = 0 ; i < num_grades ; i++){
                     printf("Enter grade [%d] : \n",i+1);
@@ -112,6 +117,10 @@ int main(void) {
                 int report_index = -1;
                 printf("Select a student to view report (1 to %d): ", num_students);
                 scanf("%d",&report_index);
+                if (report_index > num_students)
+                printf("Student cannot be found please check and try again! \n");
+                printf("Select a student to view report (1 to %d): ", num_students);
+                scanf("%d",&report_index);
                 printf("Report for %s:\n", students[report_index-1].name);
                 printf("Age: %d, ID: %s\n", students[report_index-1].age, students[report_index-1].id);
                 printf("average: %.2f\n", calculate_average(students[report_index-1].grades, num_grades));
@@ -124,6 +133,10 @@ int main(void) {
                     break;
                 }
                 int avg_index = -1;
+                printf("Select a student to calculate average (1 to %d): ", num_students);
+                scanf("%d",&avg_index);
+                if (avg_index > num_students)
+                printf("Student cannot be found please check and try again! \n");
                 printf("Select a student to calculate average (1 to %d): ", num_students);
                 scanf("%d",&avg_index);
                 students[avg_index-1].average = calculate_average(students[avg_index-1].grades, num_grades);
